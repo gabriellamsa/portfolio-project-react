@@ -1,10 +1,19 @@
+import React from "react";
 
-function BucketCard(props) {
+const BucketCard = ({ list, removeItem}) => {
   return (
-    <div className='bg-light border p-4 m-2'>
-      <h4>{props.list.name}</h4>
+    <div className='card mb-4'>
+      <div className='card-body'>
+        <h4 className='card-title'>{list.name}</h4>
+        <button
+          className='btn btn-danger'
+          onClick={() => removeItem(list.id)}
+        >
+          Remove
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default BucketCard;
