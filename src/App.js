@@ -2,6 +2,7 @@ import { useState } from "react";
 import BucketCard from './components/BucketCard';
 import AddItemForm from './components/AddItemForm';
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { Container, Row, Col } from "reactstrap";
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
           ))}
         </Row>  
       </Container>
+      <Footer />
     </>
   );
 };
