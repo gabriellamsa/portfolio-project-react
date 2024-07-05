@@ -1,7 +1,8 @@
-
 import { useState } from "react";
 import BucketCard from './components/BucketCard';
 import AddItemForm from './components/AddItemForm';
+import Header from "./components/Header";
+import { Container, Row, Col } from "reactstrap";
 
 const App = () => {
   const [list, setList] = useState([
@@ -33,19 +34,25 @@ const App = () => {
     setList(list.filter(item => item.id !== itemId));
   };
 
+  const handleLogin = (username, password) => {
+    console.log(`Username: ${username}, Password: ${password}`);
+  }
 
   return (
-    <div className='container mt-4'>
-      <h1 className='text-center mb-4'>Bucket List - Project!</h1>
-      <AddItemForm addItem={addItem} />
-      <div className='row'>
-        {list.map(item => (
-          <div className='col-md-4' key='{item.id'>
-            <BucketCard list={item} removeItem={removeItem} />
-          </div>
-        ))}
-      </div>  
-    </div>
+    <>
+      <Header />
+      <Container className='mt-4'>
+        <h1 className='text-center mb-4'>Bucket List - Project!</h1>
+        <AddItemForm addItem={addItem} />
+        <Row>
+          {list.map(item => (
+            <Col md={4} key={item.id}>
+              <BucketCard list={item} removeItem={removeItem} />
+            </Col>
+          ))}
+        </Row>  
+      </Container>
+    </>
   );
 };
 
