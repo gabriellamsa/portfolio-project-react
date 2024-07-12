@@ -27,39 +27,39 @@ const BucketListPage = () => {
 
   return (
     <>
-      <Navbar light expand="md" style={{ backgroundColor: 'white' }}>
+      <Navbar color="light" light expand="md" className="shadow-sm text-dark">
         <Container>
           <NavbarBrand href="/">
             <img 
               src={BucketListLogo}
               alt='Bucket List Logo'
-              style={{ width: '50px', marginRight: '10px' }} 
+              style={{ width: '50px', marginRight: '10px', borderRadius: '50%' }} 
             />
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/">Home Page</NavLink>
+              <NavLink href="/" className="text-muted">Home Page</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/list">Create List</NavLink>
+              <NavLink href="/list" className="text-muted">Create List</NavLink>
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>
             {currentUser && (
-              <NavItem className="d-flex align-items-center ml-3">
-                <p className="mr-3">Welcome, {currentUser.username}!</p>
+              <NavItem className="ml-3 d-flex align-items-center">
+                <p className="mr-3 mb-0 text-secondary">Welcome, {currentUser.username}!</p>
                 <img 
                   src={currentUser.avatar || unicornAvatar}
                   alt='User Avatar'
-                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                  style={{ width: '50px', height: '50px', borderRadius: '50%', border: '2px solid #f0f0f0' }}
                 />
               </NavItem>
             )}
           </Nav>
         </Container>
       </Navbar>
-      <Container className="mt-4">
-        <h1 className="text-center mb-4">Bucket List - Project!</h1>
+      <Container className="mt-4 bg-light rounded p-4">
+        <h1 className="text-center mb-4 text-info">Bucket List - Project!</h1>
         <AddItemForm addItem={handleAddItem} />
         <Row>
           {list.map(item => (

@@ -12,27 +12,27 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar light expand="md" style={{ backgroundColor: 'white' }}>
+      <Navbar color="light" light expand="md" className="shadow-sm text-dark">
         <div className="container">
           <NavbarBrand href="/">
             <img 
               src={BucketListLogo}
               alt='Bucket List Logo'
-              style={{ width: '50px', marginRight: '10px' }} 
+              style={{ width: '50px', marginRight: '10px', borderRadius: '50%' }} 
             />
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/list">Create List</NavLink>
+              <NavLink href="/list" className="text-muted">Create List</NavLink>
             </NavItem>
           </Nav>
         </div>
       </Navbar>
-      <Container className="mt-5">
-        <h1 className="text-center mb-4">Welcome to Your Dream Bucket List!</h1>
-        <p className="text-center">You are in the right place to create the list of your dreams.</p>
+      <Container className="mt-5 bg-light rounded p-4">
+        <h1 className="text-center mb-4 text-info">Welcome to Your Dream Bucket List!</h1>
+        <p className="text-center text-muted">You are in the right place to create the list of your dreams.</p>
         <div className="text-center mt-4">
-          <Button color="primary" onClick={handleGetStarted}>Get Started</Button>
+          <Button color="info" onClick={handleGetStarted} className="rounded-pill">Get Started</Button>
         </div>
       </Container>
       <UserLoginForm loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
