@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const AddItemForm = ({ addItem }) => {
   const [inputValue, setInputValue] = useState('');
@@ -25,6 +26,10 @@ const AddItemForm = ({ addItem }) => {
       </div>
     </form>
   );
+};
+
+AddItemForm.prototype = {
+  addItem: PropTypes.func.isRequired,
 };
 
 export default AddItemForm;

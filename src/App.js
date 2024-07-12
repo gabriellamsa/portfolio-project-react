@@ -7,19 +7,9 @@ import { Container, Row, Col } from "reactstrap";
 
 const App = () => {
   const [list, setList] = useState([
-    {
-      id: 0,
-      name: 'Travel to Asia'
-    },
-    {
-      id: 1,
-      name: 'Advanced PADI diving certificate'
-    },
-    {
-      id: 2,
-      name: 'Diving with whale sharks'
-    },
-  
+    { id: 0, name: 'Travel to Asia' },
+    { id: 1, name: 'Advanced PADI diving certificate' },
+    { id: 2, name: 'Diving with whale sharks' },
   ]);
 
   const addItem = (itemName) => {
@@ -31,13 +21,7 @@ const App = () => {
     setList([...list, newItem]);
   };
 
-  const removeItem = (itemId) => {
-    setList(list.filter(item => item.id !== itemId));
-  };
-
-  const handleLogin = (username, password) => {
-    console.log(`Username: ${username}, Password: ${password}`);
-  }
+  const removeItem = (itemId) => setList(list.filter(item => item.id !== itemId));
 
   return (
     <>
