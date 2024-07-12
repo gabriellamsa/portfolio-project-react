@@ -1,49 +1,31 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentUser, selectCurrentUser } from '../user/userSlice';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../user/userSlice';
 import { Modal, ModalHeader, ModalBody, FormGroup, Label, Button } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import defaultAvatar from '../img/unicorn.png';
+import unicornAvatar from '../img/unicorn.png';
 import { validateUserLoginForm } from '../utils/validateUserLoginForm';
+import { useNavigate } from 'react-router-dom';
 
-const UserLoginForm = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const currentUser = useSelector(selectCurrentUser);
+const UserLoginForm = ({ loginModalOpen, setLoginModalOpen }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = (values) => {
-    const currentUser = {
+    const user = {
       id: Date.now(),
-      avatar: defaultAvatar,
+      avatar: unicornAvatar,
       username: values.username,
       password: values.password
     };
-    dispatch(setCurrentUser(currentUser));
+    dispatch(setCurrentUser(user));
     setLoginModalOpen(false);
+    navigate('/list');
   };
 
   return (
     <>
-      <span className='navbar-text ml-auto'>
-        {currentUser ? (
-          <div style={{ width: '4rem', height: '4rem' }}>
-            <img
-              src={currentUser.avatar}
-              alt="user"
-              style={{ width: '100%', height: '100%' }}
-            />
-          </div>
-        ) : (
-          <Button
-            outline
-            onClick={() => setLoginModalOpen(true)}
-            style={{ color: 'pink', border: '1px solid white' }}
-          >
-            <i className='fa fa-sign-in fa-lg' /> Login
-          </Button>
-        )}
-      </span>
-      <Modal isOpen={loginModalOpen}>
+      <Modal isOpen={loginModalOpen} toggle={() => setLoginModalOpen(false)}>
         <ModalHeader toggle={() => setLoginModalOpen(false)}>
           Login
         </ModalHeader>

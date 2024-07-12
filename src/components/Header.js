@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import BucketListLogo from '../img/bucket-list-logo.jpeg';
-import UserLoginForm from './UserLoginForm';
 
 const Header = () => {
   return (
@@ -13,7 +12,6 @@ const Header = () => {
             alt='Bucket List Logo'
             style={{ width: '50px', marginRight: '10px' }} />
         </NavbarBrand>
-        <UserLoginForm />
       </div>
     </Navbar>
   );

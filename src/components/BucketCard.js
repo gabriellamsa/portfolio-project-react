@@ -17,10 +17,10 @@ const BucketCard = ({ list, removeItem}) => {
   );
 };
 
-BucketCard.prototype = {
+BucketCard.propTypes = {
   list: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
   }).isRequired,
   removeItem: PropTypes.func.isRequired,
 };

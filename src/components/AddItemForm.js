@@ -28,7 +28,7 @@ const AddItemForm = ({ addItem }) => {
   );
 };
 
-AddItemForm.prototype = {
+AddItemForm.propTypes = {
   addItem: PropTypes.func.isRequired,
 };
 

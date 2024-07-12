@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container, Button } from 'reactstrap';
 import BucketListLogo from '../img/bucket-list-logo.jpeg';
 import UserLoginForm from './UserLoginForm';
 
 const HomePage = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  const handleGetStarted = () => {
+    setLoginModalOpen(true);
+  };
+
   return (
     <>
       <Navbar light expand="md" style={{ backgroundColor: 'white' }}>
@@ -19,9 +25,6 @@ const HomePage = () => {
             <NavItem>
               <NavLink href="/list">Create List</NavLink>
             </NavItem>
-            <NavItem>
-              <UserLoginForm />
-            </NavItem>
           </Nav>
         </div>
       </Navbar>
@@ -29,9 +32,10 @@ const HomePage = () => {
         <h1 className="text-center mb-4">Welcome to Your Dream Bucket List!</h1>
         <p className="text-center">You are in the right place to create the list of your dreams.</p>
         <div className="text-center mt-4">
-          <Button color="primary" href="/list">Get Started</Button>
+          <Button color="primary" onClick={handleGetStarted}>Get Started</Button>
         </div>
       </Container>
+      <UserLoginForm loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
     </>
   );
 };
