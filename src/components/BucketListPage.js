@@ -1,28 +1,37 @@
-import React from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container, Row, Col } from 'reactstrap';
-import BucketCard from './BucketCard';
-import AddItemForm from './AddItemForm';
-import BucketListLogo from '../img/bucket-list-logo.jpeg';
+import React, { useState } from 'react';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container, Form, Input, Button, ListGroup, ListGroupItem, TabContent, TabPane, NavLink as TabNavLink } from 'reactstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem } from '../features/bucketListSlice';
-import unicornAvatar from '../img/unicorn.png';
+import { addItem, removeItem, toggleItemCompletion } from '../features/bucketListSlice';
 import { selectCurrentUser } from '../user/userSlice';
+import BucketListLogo from '../img/bucket-list-logo.jpeg';
+import unicornAvatar from '../img/unicorn.png';
+import { BsX } from 'react-icons/bs'; 
 
 const BucketListPage = () => {
   const list = useSelector(state => state.bucketList.list);
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState('all');
 
   const handleAddItem = (itemName) => {
     const newItem = {
       id: list.length ? list[list.length - 1].id + 1 : 0,
       name: itemName,
+      completed: false,
     };
     dispatch(addItem(newItem));
   };
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeItem(itemId));
+  };
+
+  const handleToggleCompletion = (itemId) => {
+    dispatch(toggleItemCompletion(itemId));
+  };
+
+  const toggleTab = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
   };
 
   return (
@@ -60,14 +69,70 @@ const BucketListPage = () => {
       </Navbar>
       <Container className="mt-4 bg-light rounded p-4">
         <h1 className="text-center mb-4 text-info">Bucket List - Project!</h1>
-        <AddItemForm addItem={handleAddItem} />
-        <Row>
-          {list.map(item => (
-            <Col md={4} key={item.id}>
-              <BucketCard list={item} removeItem={handleRemoveItem} />
-            </Col>
-          ))}
-        </Row>  
+        <Form onSubmit={(e) => {
+          e.preventDefault();
+          const form = e.target;
+          const input = form.elements.newTask;
+          if (input.value.trim()) {
+            handleAddItem(input.value.trim());
+            input.value = '';
+          }
+        }} className="d-flex mb-4">
+          <Input type="text" name="newTask" placeholder="New task..." />
+          <Button type="submit" color="info" className="ms-2">Add</Button>
+        </Form>
+        <Nav tabs className="mb-4">
+          <NavItem>
+            <TabNavLink className={activeTab === 'all' ? 'active' : ''} onClick={() => toggleTab('all')}>
+              All
+            </TabNavLink>
+          </NavItem>
+          <NavItem>
+            <TabNavLink className={activeTab === 'active' ? 'active' : ''} onClick={() => toggleTab('active')}>
+              Active
+            </TabNavLink>
+          </NavItem>
+          <NavItem>
+            <TabNavLink className={activeTab === 'completed' ? 'active' : ''} onClick={() => toggleTab('completed')}>
+              Completed
+            </TabNavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={activeTab}>
+          <TabPane tabId="all">
+            <ListGroup className="fixed-size-list">
+              {list.map(item => (
+                <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                  <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                  {item.completed ? <s>{item.name}</s> : item.name}
+                  <Button color="danger" size="sm" className="ms-auto" style={{ minWidth: '32px', minHeight: '32px' }} onClick={() => handleRemoveItem(item.id)}><BsX size={20} /></Button>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </TabPane>
+          <TabPane tabId="active">
+            <ListGroup className="fixed-size-list">
+              {list.filter(item => !item.completed).map(item => (
+                <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                  <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                  {item.name}
+                  <Button color="danger" size="sm" className="ms-auto" style={{ minWidth: '32px', minHeight: '32px' }} onClick={() => handleRemoveItem(item.id)}><BsX size={20} /></Button>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </TabPane>
+          <TabPane tabId="completed">
+            <ListGroup className="fixed-size-list">
+              {list.filter(item => item.completed).map(item => (
+                <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                  <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                  <s>{item.name}</s>
+                  <Button color="danger" size="sm" className="ms-auto" style={{ minWidth: '32px', minHeight: '32px' }} onClick={() => handleRemoveItem(item.id)}><BsX size={20} /></Button>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </TabPane>
+        </TabContent>
       </Container>
     </>
   );
