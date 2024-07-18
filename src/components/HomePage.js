@@ -29,7 +29,7 @@ const HomePage = () => {
         </div>
       </Navbar>
       <Container className="mt-5 bg-light rounded p-4">
-        <h1 className="text-center mb-4 text-info">Welcome to Your Dream Bucket List!</h1>
+        <h1 className="text-center mb-4 text-info">TO DO List App!</h1>
         <p className="text-center text-muted">You are in the right place to create the list of your dreams.</p>
         <div className="text-center mt-4">
           <Button color="info" onClick={handleGetStarted} className="rounded-pill">Get Started</Button>

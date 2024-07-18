@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button, Form, Input, ListGroup, ListGroupItem, TabContent, TabPane, NavLink as TabNavLink } from 'reactstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, toggleItemCompletion } from '../features/bucketListSlice';
+import { addItem, toggleItemCompletion, removeItem } from '../features/bucketListSlice';
 import { selectCurrentUser } from '../user/userSlice';
+import { AiOutlineClose } from 'react-icons/ai';
 import BucketListLogo from '../img/bucket-list-logo.jpeg';
 import unicornAvatar from '../img/unicorn.png';
 
@@ -28,6 +29,10 @@ const BucketListPage = () => {
 
   const handleToggleCompletion = (itemId) => {
     dispatch(toggleItemCompletion(itemId));
+  };
+
+  const handleRemoveItem = (itemId) => {
+    dispatch(removeItem(itemId));
   };
 
   const toggleTab = (tab) => {
@@ -76,15 +81,15 @@ const BucketListPage = () => {
         alignItems: 'center',
       }}>
         <div className="bg-light rounded p-4" style={{ width: '90%', maxWidth: '800px' }}>
-          <h1 className="text-center mb-4 text-info">Bucket List - Project!</h1>
+          <h1 className="text-center mb-4 text-info">TODO APP - Project!</h1>
           <Form onSubmit={handleAddItem} className="d-flex justify-content-center align-items-center">
             <Input
               type="textarea"
-              placeholder="What do you need to do today?"
+              placeholder="Enter here.."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               style={{ 
-                height: '200px', 
+                height: '90px', 
                 width: '100%', 
                 border: '2px solid #ced4da',
                 borderRadius: '10px',
@@ -118,9 +123,12 @@ const BucketListPage = () => {
             <TabPane tabId="all">
               <ListGroup className="fixed-size-list">
                 {list.map(item => (
-                  <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
-                    <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
-                    {item.completed ? <s>{item.name}</s> : item.name}
+                  <ListGroupItem key={item.id} className="d-flex align-items-center justify-content-between border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                    <div className="d-flex align-items-center">
+                      <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                      {item.completed ? <s>{item.name}</s> : item.name}
+                    </div>
+                    <AiOutlineClose onClick={() => handleRemoveItem(item.id)} style={{ cursor: 'pointer', color: 'red' }} />
                   </ListGroupItem>
                 ))}
               </ListGroup>
@@ -128,9 +136,12 @@ const BucketListPage = () => {
             <TabPane tabId="active">
               <ListGroup className="fixed-size-list">
                 {list.filter(item => !item.completed).map(item => (
-                  <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
-                    <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
-                    {item.name}
+                  <ListGroupItem key={item.id} className="d-flex align-items-center justify-content-between border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                    <div className="d-flex align-items-center">
+                      <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                      {item.name}
+                    </div>
+                    <AiOutlineClose onClick={() => handleRemoveItem(item.id)} style={{ cursor: 'pointer', color: 'red' }} />
                   </ListGroupItem>
                 ))}
               </ListGroup>
@@ -138,9 +149,12 @@ const BucketListPage = () => {
             <TabPane tabId="completed">
               <ListGroup className="fixed-size-list">
                 {list.filter(item => item.completed).map(item => (
-                  <ListGroupItem key={item.id} className="d-flex align-items-center border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
-                    <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
-                    <s>{item.name}</s>
+                  <ListGroupItem key={item.id} className="d-flex align-items-center justify-content-between border-0 mb-2 rounded" style={{ backgroundColor: "#f4f6f7" }}>
+                    <div className="d-flex align-items-center">
+                      <input type="checkbox" className="me-3" checked={item.completed} onChange={() => handleToggleCompletion(item.id)} />
+                      <s>{item.name}</s>
+                    </div>
+                    <AiOutlineClose onClick={() => handleRemoveItem(item.id)} style={{ cursor: 'pointer', color: 'red' }} />
                   </ListGroupItem>
                 ))}
               </ListGroup>
