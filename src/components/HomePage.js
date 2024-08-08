@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container, Button } from 'reactstrap';
+import { Navbar, NavbarBrand, Button } from 'reactstrap';
 import BucketListLogo from '../img/bucket-list-logo.jpeg';
 import UserLoginForm from './UserLoginForm';
 
@@ -12,29 +12,24 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar color="light" light expand="md" className="shadow-sm text-dark">
+      <Navbar color="light" light expand="md" className="shadow-sm">
         <div className="container">
           <NavbarBrand href="/">
-            <img 
+            <img
               src={BucketListLogo}
               alt='Bucket List Logo'
-              style={{ width: '50px', marginRight: '10px', borderRadius: '50%' }} 
+              style={{ width: '50px', marginRight: '10px', borderRadius: '50%' }}
             />
           </NavbarBrand>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/list" className="text-muted">Create List</NavLink>
-            </NavItem>
-          </Nav>
         </div>
       </Navbar>
-      <Container className="mt-5 bg-light rounded p-4">
-        <h1 className="text-center mb-4 text-info">TO DO List App!</h1>
-        <p className="text-center text-muted">You are in the right place to create the list of your dreams.</p>
-        <div className="text-center mt-4">
-          <Button color="info" onClick={handleGetStarted} className="rounded-pill">Get Started</Button>
+      <div className="hero-section text-center d-flex align-items-center" style={{ height: '100vh', background: 'linear-gradient(0deg, rgba(121, 76, 248, 1) 10%, rgba(121, 76, 248, .9) 35%, rgba(121, 76, 248, 0) 100%)' }}>
+        <div className="container bg-light rounded p-5 shadow" style={{ maxWidth: '500px' }}>
+          <h1 className="mb-4 text-primary">Bucket List App!</h1>
+          <p className="text-muted">You are in the right place to create the list of your dreams.</p>
+          <Button color="primary" onClick={handleGetStarted} className="rounded-pill mt-3">Get Started</Button>
         </div>
-      </Container>
+      </div>
       <UserLoginForm loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
     </>
   );
